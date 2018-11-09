@@ -1,5 +1,6 @@
 import time
 
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 
@@ -21,7 +22,10 @@ class AnyPage(BasePage):
         ActionChains(self.driver).send_keys(Keys.ESCAPE).perform()
 
     def go_to_globalsite(self):
-        self._click_css('[data-role="goto-globalsite"]')
+        try:
+            self._click_css('[data-role="goto-globalsite"]')
+        except NoSuchElementException:
+            return
         self.do_escape()
 
 
